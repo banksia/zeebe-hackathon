@@ -1,4 +1,4 @@
-package com.hackathon.zeebe.service
+package com.hackathon.zeebe.service.order
 
 import io.zeebe.client.api.response.ActivatedJob
 import io.zeebe.client.api.worker.JobClient
