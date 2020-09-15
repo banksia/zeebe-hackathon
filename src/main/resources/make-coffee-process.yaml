@@ -3,7 +3,7 @@ name: make-coffee
 tasks:
   - id: grind-beans
     type: grinder-service
-    goto: brew-beans
+    goto: brew-beans # goto is an optional element to order the tasks
 
   - id: brew-beans
     type: brewing-service
