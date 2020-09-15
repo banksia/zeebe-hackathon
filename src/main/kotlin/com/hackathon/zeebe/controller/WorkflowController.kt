@@ -18,8 +18,8 @@ class WorkflowController {
     @Autowired
     private val client: ZeebeClientLifecycle? = null
 
-    @GetMapping("/start")
-    fun workflow() {
+    @GetMapping("/order")
+    fun startWorkflow() {
         // Create workflow instance with fake data
         val data: MutableMap<String, Any> = HashMap()
         data["orderId"] = 31243
@@ -28,6 +28,26 @@ class WorkflowController {
         val event: WorkflowInstanceEvent = client!!
                 .newCreateInstanceCommand()
                 .bpmnProcessId("order-process")
+                .latestVersion()
+                .variables(data)
+                .send()
+                .join()
+
+        logger.info("started instance for workflowKey='{}', bpmnProcessId='{}', version='{}' with workflowInstanceKey='{}'",
+                event.workflowKey, event.bpmnProcessId, event.version, event.workflowInstanceKey)
+    }
+
+    @GetMapping("/coffee")
+    fun makeCoffee() {
+        // Create workflow instance with fake data
+        val data: MutableMap<String, Any> = HashMap()
+        data["grindType"] = "coarse"
+        data["brewType"] = "espresso"
+        data["flavourType"] = "almond milk"
+
+        val event: WorkflowInstanceEvent = client!!
+                .newCreateInstanceCommand()
+                .bpmnProcessId("make-coffee")
                 .latestVersion()
                 .variables(data)
                 .send()

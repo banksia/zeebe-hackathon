@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
 @EnableZeebeClient // connect to Zeebe broker
-@ZeebeDeployment(classPathResources = ["order-process.bpmn"]) // deploy the model
+@ZeebeDeployment(classPathResources = ["order-process.bpmn", "make-coffee-process.yaml"]) // deploy the process
 class Application
 
 fun main(args: Array<String>) {

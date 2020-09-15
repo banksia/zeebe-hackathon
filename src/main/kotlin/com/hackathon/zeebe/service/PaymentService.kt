@@ -12,7 +12,6 @@ import java.util.HashMap
 class PaymentService {
     val logger: Logger = LoggerFactory.getLogger(PaymentService::class.java)
 
-
     @ZeebeWorker(type = "payment-service")
     fun collectMoney(client: JobClient, job: ActivatedJob) {
         val variables = job.variablesAsMap

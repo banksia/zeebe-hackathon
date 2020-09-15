@@ -1,0 +1,14 @@
+name: make-coffee
+
+tasks:
+  - id: grind-beans
+    type: grinder-service
+    goto: brew-beans
+
+  - id: brew-beans
+    type: brewing-service
+    goto: add-flavour
+
+  - id: add-flavour
+    type: flavour-service
+    end: true
