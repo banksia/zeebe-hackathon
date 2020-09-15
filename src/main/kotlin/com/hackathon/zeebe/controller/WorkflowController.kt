@@ -19,7 +19,7 @@ class WorkflowController {
     private val client: ZeebeClientLifecycle? = null
 
     @GetMapping("/order")
-    fun startWorkflow() {
+    fun startOrder() {
         // Create workflow instance with fake data
         val data: MutableMap<String, Any> = HashMap()
         data["orderId"] = 31243

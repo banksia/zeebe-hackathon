@@ -1,6 +1,5 @@
 package com.hackathon.zeebe.service.coffee
 
-import com.hackathon.zeebe.service.PaymentService
 import io.zeebe.client.api.response.ActivatedJob
 import io.zeebe.client.api.worker.JobClient
 import io.zeebe.spring.client.annotation.ZeebeWorker
