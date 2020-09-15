@@ -1,0 +1,4 @@
+zeebe:
+  client.worker.defaultName: default-worker
+  client.broker.contactPoint: 127.0.0.1:26500
+  client.security.plaintext: true

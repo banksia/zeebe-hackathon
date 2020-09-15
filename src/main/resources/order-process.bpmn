@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_0kobkjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.10.0">
+  <bpmn:process id="order-process" name="Order process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Order placed">
+      <bpmn:outgoing>Flow_03ky949</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_107rxao" name="Order delivered">
+      <bpmn:incoming>Flow_0l9a0sr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03ky949" sourceRef="StartEvent_1" targetRef="payment_service_task_1" />
+    <bpmn:serviceTask id="payment_service_task_1" name="Collect money">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="payment-service" retries="3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03ky949</bpmn:incoming>
+      <bpmn:outgoing>Flow_1n7ku5a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1n7ku5a" sourceRef="payment_service_task_1" targetRef="fetch-tems" />
+    <bpmn:serviceTask id="fetch-tems" name="Fetch items">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="fetcher-service" retries="3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1n7ku5a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rqbubc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0rqbubc" sourceRef="fetch-tems" targetRef="ship-product" />
+    <bpmn:sequenceFlow id="Flow_0l9a0sr" sourceRef="ship-product" targetRef="Event_107rxao" />
+    <bpmn:serviceTask id="ship-product" name="Ship product">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="shipping-service" retries="3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0rqbubc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l9a0sr</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+      <bpmndi:BPMNEdge id="Flow_03ky949_di" bpmnElement="Flow_03ky949">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="320" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n7ku5a_di" bpmnElement="Flow_1n7ku5a">
+        <di:waypoint x="420" y="97" />
+        <di:waypoint x="520" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rqbubc_di" bpmnElement="Flow_0rqbubc">
+        <di:waypoint x="620" y="97" />
+        <di:waypoint x="730" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0l9a0sr_di" bpmnElement="Flow_0l9a0sr">
+        <di:waypoint x="830" y="97" />
+        <di:waypoint x="932" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="165" y="122" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_107rxao_di" bpmnElement="Event_107rxao">
+        <dc:Bounds x="932" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="122" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0eqxu0l_di" bpmnElement="ship-product">
+        <dc:Bounds x="730" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kubvbu_di" bpmnElement="fetch-tems">
+        <dc:Bounds x="520" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0z6loec_di" bpmnElement="payment_service_task_1">
+        <dc:Bounds x="320" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
